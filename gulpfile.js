@@ -16,6 +16,8 @@ var p = require('gulp-load-plugins')({ // This loads all the other plugins.
     'gulp-util': 'gutil'
   },
 });
+var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
 
 // 2. CONFIGURATION
 
@@ -27,12 +29,12 @@ var
   production = p.environments.production,
 
   css = {
-    in: src + 'assets/stylesheets/**/*.{css,scss,sass}',
-    out: dest + 'assets/stylesheets/',
+    in: src + 'css/**/*.{css,scss,sass}',
+    out: dest + 'css/',
   },
 
   sassOpts = {
-    imagePath: '../assets/images',
+    imagePath: '../img',
     includePaths: [bourbon, neat],
     errLogToConsole: true
   },
@@ -42,8 +44,8 @@ var
   },
 
   js = {
-    in: src + 'assets/javascripts/*.{js,coffee}',
-    out: dest + 'assets/javascripts/'
+    in: src + 'js/*.{js,coffee}',
+    out: dest + 'js/'
   },
 
   uglifyOpts = {
@@ -53,8 +55,8 @@ var
   },
 
   images = {
-    in: src + 'assets/images/*.{png,jpg,svg}',
-    out: dest + 'assets/images/'
+    in: src + 'img/*.{png,jpg,svg}',
+    out: dest + 'img/'
   },
 
   serverOpts = {
@@ -73,6 +75,7 @@ gulp.task('css', function() {
     .pipe(p.sass(sassOpts).on('error', p.sass.logError))
     .pipe(p.autoprefixer(autoprefixerOpts)).on('error', handleError)
     .pipe(production(p.cleanCss()))
+    .pipe(rename({suffix: '.min'}))
     .pipe(development(p.sourcemaps.write()))
     .pipe(gulp.dest(css.out));
 });
@@ -80,15 +83,16 @@ gulp.task('css', function() {
 // Javascript Bundling
 gulp.task('js', function() {
   var b = p.browserify({
-    entries: src + 'assets/javascripts/all.js',
+    entries: src + 'js/theme.js',
     debug: true
   });
 
   return b.bundle().on('error', handleError)
-    .pipe(p.source('bundle.js'))
+    .pipe(p.source('theme.js'))
     .pipe(production() ? p.buffer() : p.gutil.noop())
     .pipe(production(p.stripDebug()))
     .pipe(production() ? p.uglify(uglifyOpts) : p.gutil.noop())
+    .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest(js.out));
 });
 

@@ -18,8 +18,7 @@ configure :build do
     source: ".tmp",
     latency: 1
 
-  ignore "assets/javascripts/all.js"
-  ignore "assets/stylesheets/site"
+  ignore "js/theme.js"
 
   activate :gzip
 
