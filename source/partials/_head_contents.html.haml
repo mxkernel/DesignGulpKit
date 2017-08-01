@@ -35,5 +35,5 @@
 -# = partial "partials/analytics" if production?
 -# = favicon_tag "favicon.ico"
 -# = tag "link", rel: "apple-touch-icon", href: image_path("apple-touch-icon.png")
-= stylesheet_link_tag :theme
-= javascript_include_tag :theme, async: !development?
+= stylesheet_link_tag :'theme.min'
+= javascript_include_tag :'theme.min', async: !development?

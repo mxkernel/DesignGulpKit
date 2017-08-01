@@ -94,7 +94,35 @@ gulp.task('js', function() {
     .pipe(production() ? p.uglify(uglifyOpts) : p.gutil.noop())
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest(js.out));
+
 });
+
+// Javascript Bundling
+gulp.task('js', function() {
+  var b = p.browserify({
+    entries: src + 'js/theme.js',
+    debug: true
+  });
+
+  return b.bundle().on('error', handleError)
+    .pipe(p.source('theme.js'))
+    .pipe(production() ? p.buffer() : p.gutil.noop())
+    .pipe(production(p.stripDebug()))
+    .pipe(production() ? p.uglify(uglifyOpts) : p.gutil.noop())
+    .pipe(rename({suffix: '.min'}))
+    .pipe(gulp.dest(js.out));
+    
+  return b.bundle().on('error', handleError)
+    .pipe(p.source('bundle.js'))
+    .pipe(production() ? p.buffer() : p.gutil.noop())
+    .pipe(production(p.stripDebug()))
+    .pipe(production() ? p.uglify(uglifyOpts) : p.gutil.noop())
+    .pipe(gulp.dest(js.out));
+
+});
+
+
+
 
 // Image Optimization
 gulp.task('images', function() {
