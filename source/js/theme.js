@@ -1,2 +1,2 @@
 require('./_today');
-require('./_font-loader.js');
+// require('./_font-loader.js');//if have new font

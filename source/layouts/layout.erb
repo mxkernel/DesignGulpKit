@@ -10,10 +10,8 @@
     <title><%= current_page.data.title || "Untitled" %></title>
 
    <%= stylesheet_link_tag :'theme.min' %>
-    <%= javascript_include_tag :'theme.min', async: !development?%>
-    <link href="bower_components/tether/dist/css/tether.css" rel="stylesheet">
     <!-- DELETE BELOW WHEN START NEW SITE -->
-    <link href="stylesheets/carousel.css" rel="stylesheet">
+    <link href="css/carousel.css" rel="stylesheet">
     <!-- DELETE AOBVE WHEN START NEW SITE -->
   </head>
 
@@ -47,15 +45,12 @@
     <%= yield %>
 
     <%= partial "footer"%>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/tether/dist/js/tether.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <% if development? %>
-    <script src="bower_components/holderjs/holder.min.js"></script>
-    <% end %>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
   </body>
+  <% if development? %>
+  <!-- since the understrap will load it own jquery in inc/enqueue.php by wordpress function, we don't need to export jquery here -->
+  <%= javascript_include_tag 'dependencies/jquery.min' %>
+  <% end %>
+  <%= javascript_include_tag 'dependencies/tether.min' %>
+  <%= javascript_include_tag 'dependencies/bootstrap.min' %>
+  <%= javascript_include_tag :'theme.min', async: !development? %>
 </html>

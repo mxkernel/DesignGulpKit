@@ -63,7 +63,7 @@ var
     proxy: 'localhost:4567',
     open: true,
     reloadDelay: 700,
-    files: [dest + '**/*.{js,css}', src + '**/*.{html,haml,markdown}']
+    files: [dest + '**/*.{js,css}', src + '**/*.{html,erb,markdown}']
   };
 
 // 3. WORKER TASKS
@@ -111,14 +111,6 @@ gulp.task('js', function() {
     .pipe(production() ? p.uglify(uglifyOpts) : p.gutil.noop())
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest(js.out));
-    
-  return b.bundle().on('error', handleError)
-    .pipe(p.source('bundle.js'))
-    .pipe(production() ? p.buffer() : p.gutil.noop())
-    .pipe(production(p.stripDebug()))
-    .pipe(production() ? p.uglify(uglifyOpts) : p.gutil.noop())
-    .pipe(gulp.dest(js.out));
-
 });
 
 

@@ -17,7 +17,8 @@ configure :build do
     command: "npm run production",
     source: ".tmp",
     latency: 1
-
+  # Use relative URLs
+  activate :relative_assets
 
   activate :gzip
 
