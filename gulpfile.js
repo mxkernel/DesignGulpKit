@@ -100,7 +100,7 @@ gulp.task('js', function() {
 gulp.task('images', function() {
   return gulp.src(images.in)
     .pipe(p.changed(images.out))
-//    .pipe(p.imagemin())
+    // .pipe(p.imagemin()) //bug still unresolved: https://github.com/sindresorhus/gulp-imagemin/issues/245
     .pipe(gulp.dest(images.out));
 });
 

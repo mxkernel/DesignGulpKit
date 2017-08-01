@@ -18,7 +18,6 @@ configure :build do
     source: ".tmp",
     latency: 1
 
-  ignore "js/theme.js"
 
   activate :gzip
 
